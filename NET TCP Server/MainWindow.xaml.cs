@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NET_TCP_Server.Services;
+using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -18,6 +19,9 @@ namespace NET_TCP_Server
             InitializeComponent();
 
             var homePage = Properties.Resources.home;
+
+            var service = new SystemDataService();
+            service.GetData();
 
             var server = new TcpServer(IPAddress.Parse("127.0.0.1"), 4444, homePage);
             Task.Run(() => server.Start());
