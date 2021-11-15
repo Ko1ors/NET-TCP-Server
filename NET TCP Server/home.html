@@ -1,9 +1,84 @@
 
 <html>
 <head>
+    <title>Dashboard</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Bootstrap CSS -->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-    <h1>Hello world</h1>
+<body class="bg-light">
+    <h1 class="text-center py-5">DASHBOARD</h1>
+    <h3></h3>
+    <div class="py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mx-auto">
+                    <div class="card text-center text-white bg-dark h-100">
+                        <div class="card-header border-light"> <h6 class="mb-0">RAM Usage</h6> </div>
+                        <div class="card-body  align-items-center d-flex justify-content-center">
+                            <div>
+                                <h6>%%used_ram%%/%%total_ram%%</h6>
+                                <p>Available RAM: %%available_ram%%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mx-auto">
+                    <div class="card text-center text-white bg-dark  h-100">
+                        <div class="card-header border-light"> <h6 class="mb-0">CPU Usage</h6> </div>
+                        <div class="card-body align-items-center d-flex justify-content-center">
+                            <h4>%%cpu_usage%%</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mx-auto">
+                    <div class="card text-center text-white bg-dark h-100">
+                        <div class="card-header border-light"> <h6 class="mb-0">Disk Usage</h6> </div>
+                        <div class="card-body  align-items-center d-flex justify-content-center">
+                            <div>
+                                <h5>%%disk_usage%%</h5>
+                                <p>Write speed: %%disk_write%%</p>
+                                <p>Read speed: %%disk_read%%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="py-3">
+        <div class="container">
+            <div class="row">             
+                <div class="col-md-4 mx-auto">
+                    <div class="card text-center text-white bg-dark">
+                        <div class="card-header border-light"> <h6 class="mb-0">TCPv4 Connections Established Count</h6> </div>
+                        <div class="card-body">
+                            <h4>%%tcp_connections%%</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mx-auto">
+                    <div class="card text-center text-white bg-dark">
+                        <div class="card-header border-light"> <h6 class="mb-0">Processes</h6> </div>
+                        <div class="card-body">
+                            <p>%%processes%%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
