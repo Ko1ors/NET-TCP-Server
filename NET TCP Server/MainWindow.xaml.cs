@@ -1,9 +1,6 @@
-﻿using NET_TCP_Server.Services;
-using System;
-using System.IO;
+﻿using NET_TCP_Server.Models;
+using NET_TCP_Server.Services;
 using System.Net;
-using System.Net.Sockets;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -14,17 +11,30 @@ namespace NET_TCP_Server
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Settings settings;
+        private TcpServer server;
+
         public MainWindow()
         {
             InitializeComponent();
-
+            settings = new Settings();
+            DataContext = settings;
             var homePage = Properties.Resources.home;
-
             var service = new SystemDataService();
-            service.GetData();
 
-            var server = new TcpServer(IPAddress.Parse("127.0.0.1"), 4444, homePage);
-            Task.Run(() => server.Start());
+            server = new TcpServer(homePage, settings, service);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (settings.Started)
+                server.Stop();
+            else
+            {
+                if (!IPAddress.TryParse(settings.IpAddress, out var ip))
+                    return;
+                Task.Run(() => server.Start());
+            }
         }
     }
 }

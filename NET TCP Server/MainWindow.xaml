@@ -3,10 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:NET_TCP_Server"
+        xmlns:local="clr-namespace:NET_TCP_Server" xmlns:models="clr-namespace:NET_TCP_Server.Models" d:DataContext="{d:DesignInstance Type=models:Settings}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="NET TCP SERVER" Height="400" Width="300">
+    <StackPanel Margin="10,25">
+        <TextBlock Text="Ip address" FontSize="15" FontWeight="Bold" />
+        <TextBox Text="{Binding IpAddress}" FontSize="15" FontWeight="Bold" />
+        <Separator Height="15" Opacity="0"/>
+        <TextBlock Text="Port" FontSize="15" FontWeight="Bold" />
+        <TextBox Text="{Binding Port}" FontSize="15" FontWeight="Bold" />
+        <Separator Height="15" Opacity="0"/>
+        <TextBlock Text="Cache time (in seconds)" FontSize="15" FontWeight="Bold" />
+        <TextBox Text="{Binding CacheTime}" FontSize="15" FontWeight="Bold"/>
+        <Separator Height="15" Opacity="0"/>
+        <DockPanel MaxWidth="250">
+            <CheckBox IsChecked="{Binding UseCache}" Content="Cache page" FontSize="15" VerticalContentAlignment="Center" FontWeight="Bold"/>
+            <CheckBox IsChecked="{Binding UpdateWhileConnected}" HorizontalAlignment="Right" FontSize="15" VerticalContentAlignment="Center" FontWeight="Bold">
+                <TextBlock Text="Update page while connected" TextWrapping="Wrap"/>
+            </CheckBox>
+        </DockPanel>
+        <Separator Height="20" Opacity="0"/>
+        <Button Content="{Binding ButtonText, FallbackValue=Start}" Height="30" MaxWidth="250" Background="Transparent" FontSize="15" FontWeight="Bold" Click="Button_Click"/>
+    </StackPanel>
 </Window>
