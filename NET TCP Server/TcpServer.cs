@@ -1,4 +1,5 @@
-﻿using NET_TCP_Server.Services;
+﻿using NET_TCP_Server.Models;
+using NET_TCP_Server.Services;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -20,22 +21,26 @@ namespace NET_TCP_Server
 
         private DateTime LastUpdate { get; set; }
 
-        private bool NeedUpdate => string.IsNullOrEmpty(CachedPage) || (DateTime.Now - LastUpdate).TotalSeconds > 30;
+        private bool NeedUpdate => string.IsNullOrEmpty(CachedPage) || (DateTime.Now - LastUpdate).TotalSeconds > Settings?.CacheTime;
 
         private string CachedPage { get; set; }
 
-        public TcpServer(IPAddress address, int port, string page, IDataService? dataService = null)
+        private Settings Settings { get; set; }
+
+        public TcpServer(string page, Settings settings, IDataService? dataService = null)
         {
             Page = page;
-            Listener = new TcpListener(address, port);
             service = dataService;
+            Settings = settings;
         }
 
         public void Start()
         {
             try
             {
+                Listener = new TcpListener(IPAddress.Parse(Settings.IpAddress), Settings.Port);
                 Listener?.Start();
+                Settings.Started = true;
                 while (true)
                 {
                     TcpClient client = Listener.AcceptTcpClient();
@@ -48,12 +53,12 @@ namespace NET_TCP_Server
 
                             if (service is not null)
                             {
-                                if (NeedUpdate)
+                                if (!Settings.UseCache || NeedUpdate)
                                     UpdateCachedPage();
                                 SendCachedPage(writer);
                             }
 
-                            while (IsConnected(client))
+                            while (Settings.UpdateWhileConnected && IsConnected(client))
                             {
                                 if (NeedUpdate)
                                 {
@@ -143,6 +148,7 @@ namespace NET_TCP_Server
         public void Stop()
         {
             Listener?.Stop();
+            Settings.Started = false;
         }
     }
 }
